@@ -4,9 +4,9 @@ from . import views
 
 urlpatterns = [
 
-    path('', views.homepage, name = 'homepage'),
+    path('', views.index, name = 'index'),
     # more paths linked to view functions here
 
-    path('blogs/', views.index, name = 'blogs')
+    path('blogs/', views.blog, name = 'blog')
 
 ]
