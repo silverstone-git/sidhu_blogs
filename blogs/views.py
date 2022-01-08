@@ -34,7 +34,43 @@ def index(request):
 
 
 def blog(request):
-    blog_chosen = request.POST.get("blogname")
-    blog_content = getblog[blog_chosen]
-    return render(request, "blog.html", {"blog" : blog_content })
+    # check if user is logged in, show the effect in the visibility of login / sign up button
+    # give the username and level variable to template where it should be displayed with the logout button 
+    # (it should be a log out rather than logged in if already logged in)
+    #...
 
+
+    blog_chosen = request.POST.get("blogname")
+    comment = request.POST.get("comment")
+    blog_content = getblog[blog_chosen]
+    if comment:
+        messagestr = "Your comment has been posted"
+        # store the comment variable by model here
+
+    # give a comment lists in the template
+    return render(request, "blog.html", {"blog" : blog_content, "blog_title" : blog_chosen})
+
+
+def login(request):
+    # send the user to dashboard if already logged in
+    return render(request, "login.html")
+
+
+def create_account(request):
+    # kick the user to dashboard if they are logged in..
+    return render(request, "create_account.html")
+
+
+def log_out(request):
+    # log out the user and send them to home page with a message
+    return render(request, "log_out.html")
+
+
+def contact(request):
+    # give the contact and about info here with a feedback section
+    return render(request, "contact.html")
+
+
+def dashboard(request):
+    # return the user to login screen if they are anonymous or show them their stats if they are found in reader model
+    return render(request, "dashboard.html")

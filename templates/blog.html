@@ -11,6 +11,25 @@
         Welcome to the blog page
     </p>
 
+
+<form action="/login/" type="POST">
+    <button>
+        Login / Sign Up
+    </button>
+</form>
+
 {{ blog }}
+
+
+<form action="/blogs/" method="post">
+    {% csrf_token %}
+    <p>Your Comment Here:</p>
+    <input type = "text" id = "name_input" name = "comment"> <br>
+    <input type="radio" name = "blogname" value = "{{ blog_title }}" style = "display : none" checked >
+
+    <button type = "submit">
+        Comment
+    </button>
+</form>
 
 {% endblock body %}

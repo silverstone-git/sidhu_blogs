@@ -1,9 +1,7 @@
 {% extends 'basic_elements.html' %}
 
 {% block title %}
-<p>
     Home
-</p>
 {% endblock title %}
 
 
@@ -11,6 +9,12 @@
 <p>
     This is the home page
 </p>
+
+<form action="login/" type="POST">
+    <button>
+        Login / Sign Up
+    </button>
+</form>
 
 <p>
     Consectetur reiciendis aperiam ab blanditiis et. Est architecto adipisci quaerat 
@@ -54,6 +58,10 @@ quo totam perspiciatis Facere doloremque labore sit dolores vitae laboriosam Min
 consequatur esse quaerat dolore? Dignissimos inventore ipsum illum quia quae vitae
 Eligendi laboriosam necessitatibus suscipit obcaecati fugit? Doloribus excepturi soluta mollitia saepe
 facere. Fuga minus aut ducimus obcaecati sequi, amet Dolores nihil
+</p>
+{% load static %}
+<img src="{% static 'sea.jpg' %}" alt="Sea water, blue" height='500'>
+<p>
 quisquam quos consequatur dignissimos. Quibusdam dignissimos accusamus laborum suscipit laborum!
 Commodi officiis quos nam quam repudiandae Necessitatibus nulla asperiores non consequatur voluptatum ducimus ullam minus, molestiae, reprehenderit suscipit Voluptate 
 error laborum enim quas quas! Ab facere porro culpa tenetur voluptatum
@@ -67,12 +75,15 @@ neque fugit totam rem
     <p>
         The blog to be shown goes here
     </p>
+
     {% for blog_title in blog_titles %}
         <input type="radio" name = "blogname" value = "{{ blog_title }}" >{{ blog_title }}<br>
-
     {% endfor %}
+
     <button type="submit">
         Log into blogs
     </button>
+
 </form>
+
 {% endblock body %}
