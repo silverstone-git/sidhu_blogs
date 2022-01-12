@@ -36,12 +36,13 @@ Boom
 
 def index(request):
     if request.user.is_anonymous:
-        logornot = False
-        return render(request, "index.html", {"blog_titles" : blog_titles, "loggedin" : logornot})
+        loggedin = False
+        return render(request, "index.html", {"blog_titles" : blog_titles, "loggedin" : loggedin})
     else:
 
+        loggedin = True
         user_level = user_fetchcontextinator(request.user.username)['level']
-        return render(request, "index.html", {"blog_titles" : blog_titles, "loggedin" : logornot, "level": user_level})
+        return render(request, "index.html", {"blog_titles" : blog_titles, "loggedin" : loggedin, "level": user_level})
 
 
 def user_fetchcontextinator(thename):
