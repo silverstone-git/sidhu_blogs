@@ -1,0 +1,29 @@
+{% extends 'basic_elements.html' %}
+
+{% block title %}Log Out Page{% endblock title %}
+
+
+{% block body %}
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<h4>
+    You have been successfully Logged out
+</h4>
+
+
+<p>Click Here to Go Back to Home Screen</p>
+<form action = "/">
+    <button type = "submit">
+        Home
+    </button>
+</form>
+
+
+{% endblock body %}

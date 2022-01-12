@@ -15,6 +15,7 @@ class reader(models.Model):
     description = models.CharField(max_length=300)
     level = models.CharField(default="novice", max_length=20)
     no_of_comments = models.IntegerField(default=0)
+    saved_articles = models.CharField(max_length=1_00_000, default="{}")
 
 
 class comment(models.Model):

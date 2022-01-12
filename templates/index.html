@@ -10,10 +10,19 @@
     This is the home page
 </p>
 
-<form action="login/" type="POST">
-    <button>
-        Login / Sign Up
-    </button>
+<form {% if loggedin %}action="dashboard/" {% else %} action="login/" {% endif %} type="POST">
+    {% if loggedin %}
+        <p>
+            {{level}}
+        </p>
+        <button type = "submit">
+            Go to Dashboard
+        </button>
+    {% else %}
+        <button type = "submit">
+            Login / Sign Up
+        </button>
+    {% endif %}
 </form>
 
 <p>
@@ -70,7 +79,7 @@ ullam quos Obcaecati doloribus voluptates et ab commodi similique! Perspiciatis 
 neque fugit totam rem
 </p>
 
-<form method="post" action="blogs/">
+<form method="POST" action="blogs/">
     {% csrf_token %}
     <p>
         The blog to be shown goes here
@@ -81,7 +90,7 @@ neque fugit totam rem
     {% endfor %}
 
     <button type="submit">
-        Log into blogs
+        Go to blogs/
     </button>
 
 </form>

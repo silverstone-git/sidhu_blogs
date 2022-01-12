@@ -1,0 +1,46 @@
+
+{% block title %}Create Account{% endblock title %}
+
+{% block body %}
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<h3>
+    Create account
+</h3>
+
+<form method="POST" action = "/create-account/">
+
+    {% csrf_token %}
+
+    <p>Enter username - </p>
+    <input name = "name" type = "text" >
+
+    <p>Enter email address - </p>
+    <input name = "email" type = "email" >
+
+    <p>Set a password - </p>
+    <input name = "password" type = "password" >
+
+    <button type = "submit">
+        Submit
+    </button>
+</form>
+
+<p>
+    Already have an account, click here to login
+</p>
+
+<form action = "/login">
+    <button type = "submit">
+        Login
+    </button>
+</form>
+
+{% endblock body %}
