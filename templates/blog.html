@@ -12,16 +12,10 @@
     </p>
 
 
-<form action="/login/" type="POST">
-    <button>
-        Login / Sign Up
-    </button>
-</form>
-
 {{ blog }}
 
 
-<form action="/blogs/" method="post">
+<form action="/blogs/" method="POST">
     {% csrf_token %}
     <p>Your Comment Here:</p>
     <input type = "text" id = "name_input" name = "comment"> <br>

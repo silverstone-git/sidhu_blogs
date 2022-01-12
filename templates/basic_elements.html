@@ -5,6 +5,31 @@
         <title>{% block title %}{% endblock title %}</title>
 </head>
 <body>
+
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <form {% if loggedin %}action="/dashboard/" {% else %} action="login/" {% endif %} type="POST">
+        {% if loggedin %}
+            <p>
+                {{level}}
+            </p>
+            <button type = "submit">
+                Go to Dashboard
+            </button>
+        {% else %}
+            <button type = "submit">
+                Login / Sign Up
+            </button>
+        {% endif %}
+    </form>
+
     {% block body %}{% endblock body %}
 </body>
 </html>

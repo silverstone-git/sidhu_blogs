@@ -3,13 +3,9 @@
 
 {% block body %}
 
-{% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
+<p>
+    Already have an account, click on the login button at the top to login
+</p>
 
 <h3>
     Create account
@@ -33,9 +29,6 @@
     </button>
 </form>
 
-<p>
-    Already have an account, click here to login
-</p>
 
 <form action = "/login">
     <button type = "submit">

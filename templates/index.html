@@ -6,24 +6,10 @@
 
 
 {% block body %}
-<p>
+<h3>
     This is the home page
-</p>
+</h3>
 
-<form {% if loggedin %}action="dashboard/" {% else %} action="login/" {% endif %} type="POST">
-    {% if loggedin %}
-        <p>
-            {{level}}
-        </p>
-        <button type = "submit">
-            Go to Dashboard
-        </button>
-    {% else %}
-        <button type = "submit">
-            Login / Sign Up
-        </button>
-    {% endif %}
-</form>
 
 <p>
     Consectetur reiciendis aperiam ab blanditiis et. Est architecto adipisci quaerat 

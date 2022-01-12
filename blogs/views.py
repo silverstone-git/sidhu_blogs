@@ -36,13 +36,16 @@ Boom
 
 def index(request):
     if request.user.is_anonymous:
+
         loggedin = False
         return render(request, "index.html", {"blog_titles" : blog_titles, "loggedin" : loggedin})
+
     else:
 
-        loggedin = True
-        user_level = user_fetchcontextinator(request.user.username)['level']
-        return render(request, "index.html", {"blog_titles" : blog_titles, "loggedin" : loggedin, "level": user_level})
+        context = user_fetchcontextinator(request.user.username)
+        context['blog_titles'] = blog_titles
+
+        return render(request, "index.html", context = context)
 
 
 def user_fetchcontextinator(thename):
@@ -58,6 +61,7 @@ def user_fetchcontextinator(thename):
             context['level'] = user_row.level
             context['comments'] = user_row.no_of_comments
             context['saved'] = json2list(user_row.saved_articles)
+            context['loggedin'] = True
 
     return context
 
@@ -89,16 +93,21 @@ def blog(request):
     # (it should be a log out rather than logged in if already logged in)
     #...
 
+    if request.user.is_anonymous:
+        loggedin = False
+    else:
+        loggedin = True
 
     blog_chosen = request.POST.get("blogname")
     comment = request.POST.get("comment")
     blog_content = getblog[blog_chosen]
     if comment:
         messagestr = "Your comment has been posted"
+        messages.add_message(request, messages.INFO, messagestr)
         # store the comment variable by model here
 
     # give a comment lists in the template
-    return render(request, "blog.html", {"blog" : blog_content, "blog_title" : blog_chosen})
+    return render(request, "blog.html", {"blog" : blog_content, "blog_title" : blog_chosen, "loggedin" : loggedin})
 
 
 def log_in(request):
