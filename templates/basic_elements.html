@@ -15,7 +15,7 @@
     </ul>
     {% endif %}
 
-    <form {% if loggedin %}action="/dashboard/" {% else %} action="login/" {% endif %} type="POST">
+    <form {% if loggedin %}action="/dashboard/" {% else %} action="/login" {% endif %} type="POST">
         {% if loggedin %}
             <p>
                 {{level}}

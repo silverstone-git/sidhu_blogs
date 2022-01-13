@@ -9,43 +9,23 @@ from datetime import date
 # Create your views here.
 
 
-blog_titles = ["OS Review", "Bias", "Chernobyl"]
-
-
-# make a model and get the blog from it in the future
-# put a list of lines in the context and traverse through it
-getblog = dict(zip(blog_titles,
-["""
-Windows bad
-Linux good
-
-    - written by Aryan Sidhwani at 23:00 ist delhi
-""",
-"""
-I have no bias
-
-    - written by a biased Aryan Sidhwani at 23:00 ist, New Delhi
-""",
-"""
-Boom
-
-    - written by Aryan Sidhwani at 23:00 IST, New Delhi
-"""
-]
-))
-
 def index(request):
-    if request.user.is_anonymous:
 
-        loggedin = False
-        return render(request, "index.html", {"blog_titles" : blog_titles, "loggedin" : loggedin})
+    blog_heads = []
+    blog_data = article.objects.all()
+    for article_row in blog_data:
+        blog_heads.append((article_row.title, article_row.name))
+
+    if request.user.is_authenticated:
+
+        context = user_fetchcontextinator(request.user.username)
+        context['blog_heads'] = blog_heads
+        return render(request, "index.html", context = context)
 
     else:
 
-        context = user_fetchcontextinator(request.user.username)
-        context['blog_titles'] = blog_titles
-
-        return render(request, "index.html", context = context)
+        loggedin = False
+        return render(request, "index.html", {"blog_heads" : blog_heads, "loggedin" : loggedin})
 
 
 def user_fetchcontextinator(thename):
@@ -66,11 +46,22 @@ def user_fetchcontextinator(thename):
     return context
 
 
+def getblog(blogname, retrieve_content = True):
+    blog_data = article.objects.all()
+    for article_row in blog_data:
+        if article_row.name == blogname :
+            if retrieve_content:
+                return article_row.content
+            else:
+                return article_row.title
+
+
 def json2list(thejsonstring):
     # takes a json string, extracts values from it, evaluates it, returns them in the form of list
 
     """
-    tbd- add a saved json in reader model, make comments' hash code using datetime and add them to 
+    tbd- upload page for articles and a retrieval system
+        - add a saved json in reader model, make comments' hash code using datetime and add them to 
         - add a hashcode entry in the model of both comment and article, so that associated comments can be loaded in the template
         - add reader created datetime, last login datetime, no of logins, no of saved, and profile photo url in reader model 
         - add upvotes and user's name in comments model
@@ -93,32 +84,34 @@ def blog(request):
     # (it should be a log out rather than logged in if already logged in)
     #...
 
-    if request.user.is_anonymous:
-        loggedin = False
-    else:
+    if request.user.is_authenticated:
         loggedin = True
+    else:
+        loggedin = False
 
-    blog_chosen = request.POST.get("blogname")
+    blog_name = request.POST.get("blogname")
+    blog_title = getblog(blog_name, retrieve_content = False)
     comment = request.POST.get("comment")
-    blog_content = getblog[blog_chosen]
+    blog_content = getblog(blog_name)
     if comment:
         messagestr = "Your comment has been posted"
         messages.add_message(request, messages.INFO, messagestr)
         # store the comment variable by model here
 
     # give a comment lists in the template
-    return render(request, "blog.html", {"blog" : blog_content, "blog_title" : blog_chosen, "loggedin" : loggedin})
+    # and somehow manage to return title from index template as well, so that view can recieve it and give it to blog's template
+    # or, just get the corresponding title from database using a function
+    # giving the blog name as well for save button's sake in the future
+    return render(request, "blog.html", {"blog" : blog_content, "blog_title" : blog_title, "blog_name" : blog_name, "loggedin" : loggedin})
 
 
 def log_in(request):
     # send the user to dashboard if already logged in
     # handle login post
-
-        
-    if request.user.is_anonymous:
-        return render(request, "login.html")
-    else:
+    if request.user.is_authenticated:
         return redirect('/dashboard')
+    else:
+        return render(request, "login.html", {"loggedin" : False})
 
 
 def create_account(request):
@@ -133,12 +126,14 @@ def create_account(request):
         new_reader_obj.save()
         messagestr = "The account has been created, please proceed to log in section by clicking the button down below"
         messages.add_message(request, messages.INFO, messagestr)
-        return render(request, "create_account.html")
+        return render(request, "create_account.html", {"loggedin" : False})
     else:
-        if request.user.is_anonymous:
-            return render(request, "create_account.html")
+        if request.user.is_authenticated:
+            return redirect("/dashboard")
+        elif request.user.is_anonymous:
+            return render(request, "create_account.html", {"loggedin" : False})
         else:
-            return redirect('/dashboard')
+            return redirect('/login')
 
 
 def log_out(request):
@@ -175,8 +170,10 @@ def dashboard(request):
     else:
 
         # this block executes when user randomly types in dashboard in url
-        if request.user.is_anonymous:
-            return redirect('/create-account')
-        else:
+        if request.user.is_authenticated:
             context = user_fetchcontextinator(request.user.username)
             return render(request, "dashboard.html", context = context)
+        elif request.user.is_anonymous:
+            return redirect("/create-account")
+        else:
+            return redirect('/login')

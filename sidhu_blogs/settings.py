@@ -123,7 +123,8 @@ STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [
     BASE_DIR / "static",
-    '/var/www/static/',
+    # uncomment this if apache server
+    #'/var/www/static/',
 ]
 
 

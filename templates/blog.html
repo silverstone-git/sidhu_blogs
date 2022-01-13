@@ -19,8 +19,10 @@
     {% csrf_token %}
     <p>Your Comment Here:</p>
     <input type = "text" id = "name_input" name = "comment"> <br>
-    <input type="radio" name = "blogname" value = "{{ blog_title }}" style = "display : none" checked >
-
+    <!-- This hidden radio is to ensure that when comment is passed, blog name is also passed back into the view and thus the template again, 
+    thus preventing the situation where there is no blog after comment because no blogname in request-->
+    <input type="radio" name = "blogname" value = "{{ blog_name }}" style = "display : none" checked >
+<br>
     <button type = "submit">
         Comment
     </button>

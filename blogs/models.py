@@ -4,6 +4,7 @@ from django.db import models
 
 
 class article(models.Model):
+    name = models.CharField(max_length=300, default="origin_13_jan_2022")
     title = models.CharField(max_length=122)
     content = models.CharField(max_length=9_00_000)
     date_posted = models.DateField()

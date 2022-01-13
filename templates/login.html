@@ -19,14 +19,15 @@
     <p>Set a password - </p>
     <input name = "password" type = "password" >
 
+    <br>
     <button type = "submit">
         Submit
     </button>
 </form>
 
 
-<p>New Here?</p>
-<form action = "/create-account/" method = "POST">
+<p>New Here?</p><br>
+<form action = "/create-account/">
     {% csrf_token %}
     <button type = "submit">
         Create an Account
