@@ -15,6 +15,35 @@
 </p>
 
 
+<h3>
+    {{description}}
+</h3>
+
+<form action = "/dashboard/" method = "POST">
+
+    {% csrf_token %}
+    <input type="radio" name = "edit_desc" value = "True" style = "display : none" checked >
+    <button type = "submit">
+        Edit Description
+    </button>
+</form>
+
+
+<form action = "/dashboard/" method = "POST" {% if not edit_desc %} style = "display : none" {% endif %}>
+
+    {% csrf_token %}
+    <p>
+        Enter new description here
+    </p>
+    <input type="text" name="desc">
+    <input type="radio" name = "edit_desc" value = "new" style = "display : none" checked >
+    <button type = "submit">
+        Change Description
+    </button>
+
+</form>
+
+
 <form action = "/log-out">
     <button type = "submit">
         Log Out

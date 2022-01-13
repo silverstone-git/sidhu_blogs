@@ -28,7 +28,7 @@ def index(request):
         return render(request, "index.html", {"blog_heads" : blog_heads, "loggedin" : loggedin})
 
 
-def user_fetchcontextinator(thename):
+def user_fetchcontextinator(thename, get_desc = False):
 
     # getting users' rows from reader model
     user_data = reader.objects.all()
@@ -42,6 +42,9 @@ def user_fetchcontextinator(thename):
             context['comments'] = user_row.no_of_comments
             context['saved'] = json2list(user_row.saved_articles)
             context['loggedin'] = True
+            if get_desc:
+                context['description'] = user_row.description
+            context['edit_desc'] = False
 
     return context
 
@@ -115,7 +118,8 @@ def log_in(request):
 
 
 def create_account(request):
-    # kick the user to dashboard if they are logged in..
+
+    # send the user to dashboard if they are logged in..
 
     if request.method == "POST":
         recieved_name = request.POST.get('name')
@@ -150,28 +154,37 @@ def contact(request):
 
 
 def dashboard(request):
+
     # return the user to login screen if they are anonymous or show them their stats if they are found in reader model
 
-    
-    if request.method == "POST":
+    if request.method == "POST" and request.POST.get("edit_desc") == "False":
         recieved_name = request.POST.get('name')
         # will check if this auth object even exists or not
         user = authenticate(request, username = recieved_name, password = request.POST.get('password'))
 
         if user is not None:
             login(request, user)
-            context = user_fetchcontextinator(recieved_name)
+            context = user_fetchcontextinator(recieved_name, get_desc = True)
             return render(request, "dashboard.html", context = context)
         else:
             # user doesn't exist, send a message and reload the login page
             messagestr = "Your attempt to login has failed, please try again"
             messages.add_message(request, messages.INFO, messagestr)
             return redirect('/login')
+
     else:
 
         # this block executes when user randomly types in dashboard in url
         if request.user.is_authenticated:
-            context = user_fetchcontextinator(request.user.username)
+            context = user_fetchcontextinator(request.user.username, get_desc = True)
+
+            # the case when user has clicked edit description, ie, True value of edit_desc
+            if request.method == "POST" and request.POST.get("edit_desc") == "True":
+                context['edit_desc'] = True
+            elif request.method == "POST" and request.POST.get("edit_desc") == "new":
+                new_desc = request.POST.get("desc")
+                reader.objects.update_or_create(username = request.user.username, defaults={"description" : new_desc})
+
             return render(request, "dashboard.html", context = context)
         elif request.user.is_anonymous:
             return redirect("/create-account")
