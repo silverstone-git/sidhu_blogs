@@ -40,7 +40,7 @@ def user_fetchcontextinator(thename, get_desc = False):
         if user_row.username == thename:
             context['level'] = user_row.level
             context['comments'] = user_row.no_of_comments
-            context['saved'] = json2list(user_row.saved_articles)
+            context['saved'] = eval(user_row.saved_articles)
             context['loggedin'] = True
             if get_desc:
                 context['description'] = user_row.description
@@ -60,7 +60,7 @@ def getblog(blogname, retrieve_content = True):
 
 
 def json2list(thejsonstring):
-    # takes a json string, extracts values from it, evaluates it, returns them in the form of list
+    # started off as a functional function, now is a dummy function
 
     """
     tbd- upload page for articles and a retrieval system
@@ -78,7 +78,8 @@ def json2list(thejsonstring):
             , add the photo link to reader's object dp for the user, process it, and 
         - let the user upload an article if the level has reached writer
     """
-    return []
+
+    pass
 
 
 def blog(request):
@@ -87,14 +88,53 @@ def blog(request):
     # (it should be a log out rather than logged in if already logged in)
     #...
 
+    mydict = request.POST.dict()
+    # the above line put the values in a list for some reason
+
+#    mydict = {}
+#    for key in request.POST:
+#        mydict[key] = request.POST[key]
+
     if request.user.is_authenticated:
         loggedin = True
     else:
         loggedin = False
 
-    blog_name = request.POST.get("blogname")
+    print(request.POST)
+    print(mydict)
+    for a in mydict.keys():
+        print(mydict[a], type(mydict[a]))
+    print("\n\n--------------\n\n")
+
+    comment = mydict.get("comment")
+
+        
+
+    if eval(mydict["saveit"]):
+        # because comment False only comes from index, so we have to give something
+        #comment = False
+        blog_name = mydict["saverequest"]
+
+        # picking the reader row and then editing it if no error in 2nd line
+        myrow = reader.objects.get(username = request.user.username)
+        recieved_saved_articles = eval(myrow.saved_articles)
+        print("\nThe old recieved article list is: ", recieved_saved_articles, type(recieved_saved_articles,), "\n")
+        recieved_saved_articles.append(blog_name)
+        print("\nThe new article list is: ", recieved_saved_articles, "\n")
+        #reader.objects.update_or_create(username = request.user.username, defaults={"saved_articles" : new_saved})
+        myrow.saved_articles = str(recieved_saved_articles)
+        myrow.save()
+
+        # drop a message that the article is saved
+        messagestr = "The article has been saved"
+        messages.add_message(request, messages.INFO, messagestr)
+    else:
+        blog_name = mydict['blogname']
+
+
+
+    # tbd - handle the scenario where user enters blog url randomly, put a if post: maybe
     blog_title = getblog(blog_name, retrieve_content = False)
-    comment = request.POST.get("comment")
     blog_content = getblog(blog_name)
     if comment:
         messagestr = "Your comment has been posted"

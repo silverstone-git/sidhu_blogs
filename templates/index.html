@@ -71,8 +71,10 @@ neque fugit totam rem
         The blog to be shown goes here
     </p>
 
+    <input type="radio" name = "saveit" value = "False" style="display:none" id="saveit" checked>
+
     {% for blog_title,blog_name in blog_heads %}
-        <input type="radio" name = "blogname" value = "{{ blog_name }}" >{{ blog_title }}<br>
+        <input type="radio" name = "blogname" value = "{{ blog_name }}" id="blogname">{{ blog_title }}<br>
     {% endfor %}
 
     <button type="submit">

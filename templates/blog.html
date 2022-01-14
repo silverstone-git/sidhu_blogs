@@ -11,6 +11,19 @@
         Welcome to the blog page
     </p>
 
+{% if loggedin %}
+<form action="/blogs/" method="POST">
+
+    {% csrf_token %}
+    <input type="radio" name="saverequest" value="{{blog_name}}" style="display:none" checked>
+    <input type="radio" name="saveit" value="True" style="display:none" checked>
+    <button type="submit">
+        <p>
+            Click Here to Save this article
+        </p>
+    </button>
+</form>
+{% endif %}
 
 {{ blog }}
 
