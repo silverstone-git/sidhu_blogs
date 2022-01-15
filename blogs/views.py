@@ -30,34 +30,30 @@ def index(request):
 
 def user_fetchcontextinator(thename, get_desc = False):
 
-    # getting users' rows from reader model
-    user_data = reader.objects.all()
-
     context = {}
 
-    # catching the user stats if request's name is matched with user row's name
-    for user_row in user_data:
-        if user_row.username == thename:
-            context['level'] = user_row.level
-            context['comments'] = user_row.no_of_comments
-            saved_list = eval(user_row.saved_articles)
-            context['saved_article_dictitems'] = dict(zip(saved_list, list([article.objects.get(name = x).title for x in saved_list]) )).items()
-            context['loggedin'] = True
-            if get_desc:
-                context['description'] = user_row.description
-            context['edit_desc'] = False
+    # getting users' rows from reader model
+    user_row = reader.objects.get(username = thename)
+
+    if user_row.username == thename:
+        context['level'] = user_row.level
+        context['comments'] = user_row.no_of_comments
+        saved_list = eval(user_row.saved_articles)
+        context['saved_article_dictitems'] = dict(zip(saved_list, list([article.objects.get(name = x).title for x in saved_list]) )).items()
+        context['loggedin'] = True
+        if get_desc:
+            context['description'] = user_row.description
+        context['edit_desc'] = False
 
     return context
 
 
 def getblog(blogname, retrieve_content = True):
-    blog_data = article.objects.all()
-    for article_row in blog_data:
-        if article_row.name == blogname :
-            if retrieve_content:
-                return article_row.content
-            else:
-                return article_row.title
+    article_row = article.objects.get(name = blogname)
+    if retrieve_content:
+        return article_row.content
+    else:
+        return article_row.title
 
 
 def json2list(thejsonstring):
@@ -101,12 +97,6 @@ def blog(request):
     else:
         loggedin = False
 
-    print(request.POST)
-    print(mydict)
-    for a in mydict.keys():
-        print(mydict[a], type(mydict[a]))
-    print("\n\n--------------\n\n")
-
     comment = mydict.get("comment")
 
         
@@ -119,10 +109,7 @@ def blog(request):
         # picking the reader row and then editing it if no error in 2nd line
         myrow = reader.objects.get(username = request.user.username)
         recieved_saved_articles = eval(myrow.saved_articles)
-        print("\nThe old recieved article list is: ", recieved_saved_articles, type(recieved_saved_articles,), "\n")
         recieved_saved_articles.append(blog_name)
-        print("\nThe new article list is: ", recieved_saved_articles, "\n")
-        #reader.objects.update_or_create(username = request.user.username, defaults={"saved_articles" : new_saved})
         myrow.saved_articles = str(recieved_saved_articles)
         myrow.save()
 
@@ -206,9 +193,6 @@ def dashboard(request):
         if user is not None:
             login(request, user)
             context = user_fetchcontextinator(recieved_name, get_desc = True)
-            testitems = context['saved_article_dictitems']
-            for key,val in testitems:
-                print(key, val)
             return render(request, "dashboard.html", context = context)
         else:
             # user doesn't exist, send a message and reload the login page
@@ -221,10 +205,6 @@ def dashboard(request):
         # this block executes when user randomly types in dashboard in url
         if request.user.is_authenticated:
             context = user_fetchcontextinator(request.user.username, get_desc = True)
-
-            testitems = context['saved_article_dictitems']
-            for key,val in testitems:
-                print(key, val)
 
             # the case when user has clicked edit description, ie, True value of edit_desc
             if request.method == "POST" and request.POST.get("edit_desc") == "True":
