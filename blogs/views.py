@@ -40,7 +40,8 @@ def user_fetchcontextinator(thename, get_desc = False):
         if user_row.username == thename:
             context['level'] = user_row.level
             context['comments'] = user_row.no_of_comments
-            context['saved'] = eval(user_row.saved_articles)
+            saved_list = eval(user_row.saved_articles)
+            context['saved_article_dictitems'] = dict(zip(saved_list, list([article.objects.get(name = x).title for x in saved_list]) )).items()
             context['loggedin'] = True
             if get_desc:
                 context['description'] = user_row.description
@@ -205,6 +206,9 @@ def dashboard(request):
         if user is not None:
             login(request, user)
             context = user_fetchcontextinator(recieved_name, get_desc = True)
+            testitems = context['saved_article_dictitems']
+            for key,val in testitems:
+                print(key, val)
             return render(request, "dashboard.html", context = context)
         else:
             # user doesn't exist, send a message and reload the login page
@@ -217,6 +221,10 @@ def dashboard(request):
         # this block executes when user randomly types in dashboard in url
         if request.user.is_authenticated:
             context = user_fetchcontextinator(request.user.username, get_desc = True)
+
+            testitems = context['saved_article_dictitems']
+            for key,val in testitems:
+                print(key, val)
 
             # the case when user has clicked edit description, ie, True value of edit_desc
             if request.method == "POST" and request.POST.get("edit_desc") == "True":

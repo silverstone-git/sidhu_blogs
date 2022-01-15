@@ -4,9 +4,19 @@
 
 {% block body %}
 
-{% if saved %}
-    {% for saved_articles in saved %}
-        <p>{{saved_articles}}</p>
+{% if saved_article_dictitems %}
+    {% for saved_article_name, saved_article_title in saved_article_dictitems %}
+        <form action="/blogs/" method="POST">
+            {% csrf_token %}
+
+            <!-- to simulate index template like conditions in order to put load the POST request -->
+            <input type="radio" name = "saveit" value = "False" style="display:none" id="saveit" checked>
+            <input type="radio" name = "blogname" value = "{{ saved_article_name }}" id="blogname" style="display:none" checked>
+
+            <button type="submit">
+                <p>{{ saved_article_title }}</p>
+            </button>
+        </form>
     {% endfor %}
 {% endif %}
 
