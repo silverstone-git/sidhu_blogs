@@ -1,7 +1,7 @@
 {% extends 'basic_elements.html' %}
 
 {% block title %}
-    Blog Page
+    {{ blog_title }}
 {% endblock title %}
 
 
@@ -15,8 +15,8 @@
 <form action="/blogs/" method="POST">
 
     {% csrf_token %}
-    <input type="radio" name="saverequest" value="{{blog_name}}" style="display:none" checked>
     <input type="radio" name="saveit" value="True" style="display:none" checked>
+    <input type="radio" name = "blognameandtitle" value = "{{ blog_name }} {{blog_title}}" id="blognameandtitle" checked>
     <button type="submit">
         <p>
             Click Here to Save this article
@@ -24,6 +24,11 @@
     </button>
 </form>
 {% endif %}
+
+<h2>
+    {{ blog_title }}
+</h2>
+
 
 {{ blog }}
 
@@ -34,7 +39,8 @@
     <input type = "text" id = "name_input" name = "comment"> <br>
     <!-- This hidden radio is to ensure that when comment is passed, blog name is also passed back into the view and thus the template again, 
     thus preventing the situation where there is no blog after comment because no blogname in request-->
-    <input type="radio" name = "blogname" value = "{{ blog_name }}" style = "display : none" checked >
+    <input type="radio" name="saveit" value="False" style="display:none" checked>
+    <input type="radio" name = "blognameandtitle" value = "{{ blog_name }} {{blog_title}}" style="display:none" id="blognameandtitle" checked>
 <br>
     <button type = "submit">
         Comment

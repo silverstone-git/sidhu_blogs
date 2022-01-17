@@ -86,6 +86,7 @@ def blog(request):
     #...
 
     mydict = request.POST.dict()
+    #print(mydict)
     # the above line put the values in a list for some reason
 
 #    mydict = {}
@@ -98,13 +99,13 @@ def blog(request):
         loggedin = False
 
     comment = mydict.get("comment")
-
+    
+    blog_name_and_title = mydict['blognameandtitle'].split(" ")
+    blog_title = " ".join(blog_name_and_title[1:])
+    blog_name = blog_name_and_title[0]
         
 
     if eval(mydict["saveit"]):
-        # because comment False only comes from index, so we have to give something
-        #comment = False
-        blog_name = mydict["saverequest"]
 
         # picking the reader row and then editing it if no error in 2nd line
         myrow = reader.objects.get(username = request.user.username)
@@ -116,13 +117,13 @@ def blog(request):
         # drop a message that the article is saved
         messagestr = "The article has been saved"
         messages.add_message(request, messages.INFO, messagestr)
-    else:
-        blog_name = mydict['blogname']
+
 
 
 
     # tbd - handle the scenario where user enters blog url randomly, put a if post: maybe
-    blog_title = getblog(blog_name, retrieve_content = False)
+    #blog_title = getblog(blog_name, retrieve_content = False)
+    # -- no need, I got it from context, both index and blog save templates, so, its before the condition
     blog_content = getblog(blog_name)
     if comment:
         messagestr = "Your comment has been posted"
