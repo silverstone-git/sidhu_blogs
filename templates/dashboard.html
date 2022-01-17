@@ -11,7 +11,7 @@
 
             <!-- to simulate index template like conditions in order to put load the POST request -->
             <input type="radio" name = "saveit" value = "False" style="display:none" id="saveit" checked>
-            <input type="radio" name = "blogname" value = "{{ saved_article_name }}" id="blogname" style="display:none" checked>
+            <input type="radio" name = "blognameandtitle" value = "{{ saved_article_name }} {{ saved_article_title }}" style="display:none" checked>
 
             <button type="submit">
                 <p>{{ saved_article_title }}</p>

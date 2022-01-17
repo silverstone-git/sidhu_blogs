@@ -100,7 +100,11 @@ def blog(request):
 
     comment = mydict.get("comment")
     
-    blog_name_and_title = mydict['blognameandtitle'].split(" ")
+    try:
+        blog_name_and_title = mydict['blognameandtitle'].split(" ")
+    except KeyError:
+        # this key can only not exist when the user types in this url randomly
+        return redirect('/')
     blog_title = " ".join(blog_name_and_title[1:])
     blog_name = blog_name_and_title[0]
         

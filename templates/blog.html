@@ -16,7 +16,7 @@
 
     {% csrf_token %}
     <input type="radio" name="saveit" value="True" style="display:none" checked>
-    <input type="radio" name = "blognameandtitle" value = "{{ blog_name }} {{blog_title}}" id="blognameandtitle" checked>
+    <input type="radio" name = "blognameandtitle" value = "{{ blog_name }} {{blog_title}}" style="display:none" id="blognameandtitle" checked>
     <button type="submit">
         <p>
             Click Here to Save this article
