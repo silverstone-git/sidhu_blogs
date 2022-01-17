@@ -93,10 +93,7 @@ def blog(request):
 #    for key in request.POST:
 #        mydict[key] = request.POST[key]
 
-    if request.user.is_authenticated:
-        loggedin = True
-    else:
-        loggedin = False
+
 
     comment = mydict.get("comment")
     
@@ -107,9 +104,29 @@ def blog(request):
         return redirect('/')
     blog_title = " ".join(blog_name_and_title[1:])
     blog_name = blog_name_and_title[0]
+    
+    if request.user.is_authenticated:
+        loggedin = True
+        blog_dne_savedlist = True
+        blog_saved = False
+        
+        # get the reader's row and find if this blog is already saved
+        myrow = reader.objects.get(username = request.user.username)
+        recieved_saved_articles = eval(myrow.saved_articles)
+        if blog_name in recieved_saved_articles:
+            blog_saved = True
+            blog_dne_savedlist = False
+            # what we want is that if user hasn't saved the article, the save article form block shows
+            # also, we don't want both the button and saved! remark if user isn't even authed up
+    else:
+        # no remark or button if no auth
+        blog_dne_savedlist = True
+        blog_saved = False
+        loggedin = False
         
 
     if eval(mydict["saveit"]):
+        # the case when user presses save the article button
 
         # picking the reader row and then editing it if no error in 2nd line
         myrow = reader.objects.get(username = request.user.username)
@@ -138,7 +155,14 @@ def blog(request):
     # and somehow manage to return title from index template as well, so that view can recieve it and give it to blog's template
     # or, just get the corresponding title from database using a function
     # giving the blog name as well for save button's sake in the future
-    return render(request, "blog.html", {"blog" : blog_content, "blog_title" : blog_title, "blog_name" : blog_name, "loggedin" : loggedin})
+    return render(request, "blog.html", {
+        "blog" : blog_content,
+        "blog_title" : blog_title,
+        "blog_name" : blog_name,
+        "loggedin" : loggedin,
+        "blog_dne_savedlist" : blog_dne_savedlist,
+        "blog_saved" : blog_saved
+    })
 
 
 def log_in(request):

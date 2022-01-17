@@ -12,9 +12,12 @@
     </p>
 
 {% if loggedin %}
+
+{% if blog_dne_savedlist %}
 <form action="/blogs/" method="POST">
 
     {% csrf_token %}
+    
     <input type="radio" name="saveit" value="True" style="display:none" checked>
     <input type="radio" name = "blognameandtitle" value = "{{ blog_name }} {{blog_title}}" style="display:none" id="blognameandtitle" checked>
     <button type="submit">
@@ -23,6 +26,16 @@
         </p>
     </button>
 </form>
+{% endif %}
+
+{% if blog_saved %}
+
+<h5>
+    Saved!
+</h5>
+
+{% endif %}
+
 {% endif %}
 
 <h2>
