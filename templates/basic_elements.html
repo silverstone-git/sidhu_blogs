@@ -15,6 +15,13 @@
     </ul>
     {% endif %}
 
+    <form action='/contact'>
+        <button type='submit'>
+            Contact Me
+        </button>
+    </form>
+    
+    
     <form {% if loggedin %}action="/dashboard/" {% else %} action="/login" {% endif %} type="POST">
         {% if loggedin %}
             <p>

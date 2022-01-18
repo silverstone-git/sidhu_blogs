@@ -35,15 +35,16 @@ def user_fetchcontextinator(thename, get_desc = False):
     # getting users' rows from reader model
     user_row = reader.objects.get(username = thename)
 
-    if user_row.username == thename:
-        context['level'] = user_row.level
-        context['comments'] = user_row.no_of_comments
-        saved_list = eval(user_row.saved_articles)
-        context['saved_article_dictitems'] = dict(zip(saved_list, list([article.objects.get(name = x).title for x in saved_list]) )).items()
-        context['loggedin'] = True
-        if get_desc:
-            context['description'] = user_row.description
-        context['edit_desc'] = False
+    context['level'] = user_row.level
+    context['comments'] = user_row.no_of_comments
+    saved_list = eval(user_row.saved_articles)
+    context['saved_article_dictitems'] = dict(zip(saved_list, list([article.objects.get(name = x).title for x in saved_list]) )).items()
+    context['loggedin'] = True
+    context['loggedout'] = False
+    if get_desc:
+        context['description'] = user_row.description
+    context['edit_desc'] = False
+    context['email'] = user_row.email_address
 
     return context
 
@@ -207,7 +208,16 @@ def log_out(request):
 
 def contact(request):
     # give the contact and about info here with a feedback section
-    return render(request, "contact.html")
+    context = {}
+    if request.user.is_authenticated:
+        thename = request.user.username
+        context = user_fetchcontextinator(thename)
+        context['username'] = thename
+    else:
+        context['loggedin'] = False
+        context['loggedout'] = True
+        
+    return render(request, "contact.html", context = context)
 
 
 def dashboard(request):
