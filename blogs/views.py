@@ -102,7 +102,9 @@ def blog(request):
         blog_name_and_title = mydict['blognameandtitle'].split(" ")
     except KeyError:
         # this key can only not exist when the user types in this url randomly
-        return redirect('/')
+        # or clicks the go to blog button without selection
+        messages.error(request, 'Please select a blog before going to the blog!')
+        return render(request, 'noselection.html')
     blog_title = " ".join(blog_name_and_title[1:])
     blog_name = blog_name_and_title[0]
     
@@ -164,6 +166,7 @@ def blog(request):
         "blog_dne_savedlist" : blog_dne_savedlist,
         "blog_saved" : blog_saved
     })
+    
 
 
 def log_in(request):
