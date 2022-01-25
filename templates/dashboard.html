@@ -1,0 +1,70 @@
+{% extends 'basic_elements.html' %}
+
+{% block title %}Dashboard{% endblock title %}
+
+{% block body %}
+
+{% if saved_article_dictitems %}
+    {% for saved_article_name, saved_article_title in saved_article_dictitems %}
+        <form action="/blogs/" method="POST">
+            {% csrf_token %}
+
+            <!-- to simulate index template like conditions in order to put load the POST request -->
+            <input type="radio" name = "saveit" value = "False" style="display:none" id="saveit" checked>
+            <input type="radio" name = "blognameandtitle" value = "{{ saved_article_name }} {{ saved_article_title }}" style="display:none" checked>
+
+            <button type="submit">
+                <p>{{ saved_article_title }}</p>
+            </button>
+        </form>
+    {% endfor %}
+{% endif %}
+
+<p>
+    Your number of Comments are : {{comments}}
+</p>
+
+
+<h3>
+    {{description}}
+</h3>
+
+<form action = "/dashboard/" method = "POST">
+
+    {% csrf_token %}
+    <input type="radio" name = "edit_desc" value = "True" style = "display : none" checked >
+    <button type = "submit">
+        Edit Description
+    </button>
+</form>
+
+
+<form action = "/dashboard/" method = "POST" {% if not edit_desc %} style = "display : none" {% endif %}>
+
+    {% csrf_token %}
+    <p>
+        Enter new description here
+    </p>
+    <input type="text" name="desc">
+    <input type="radio" name = "edit_desc" value = "new" style = "display : none" checked >
+    <button type = "submit">
+        Change Description
+    </button>
+
+</form>
+
+
+<form action = "/log-out">
+    <button type = "submit">
+        Log Out
+    </button>
+</form>
+
+
+<form action = "/">
+    <button type = "submit">
+        Go Home
+    </button>
+</form>
+
+{% endblock body %}

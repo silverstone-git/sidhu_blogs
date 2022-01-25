@@ -1,0 +1,7 @@
+env/
+blogs/__init__.py
+blogs/__pycache__/
+sidhu_blogs/__init__.py
+sidhu_blogs/__pycache__/
+sidhu_blogs/settings.py
+db.sqlite3

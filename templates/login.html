@@ -1,0 +1,38 @@
+{% extends 'basic_elements.html' %}
+
+{% block title %}Log In{% endblock title %}
+
+{% block body %}
+
+
+<h3>
+    Log In
+</h3>
+
+<form method="POST" action = "/dashboard/">
+
+    {% csrf_token %}
+
+    <p>Enter username - </p>
+    <input name = "name" type = "text" >
+
+    <p>Set a password - </p>
+    <input name = "password" type = "password" >
+    <input type="radio" name = "edit_desc" value = "False" style = "display : none" checked >
+
+    <br>
+    <button type = "submit">
+        Submit
+    </button>
+</form>
+
+
+<p>New Here?</p><br>
+<form action = "/create-account/">
+    {% csrf_token %}
+    <button type = "submit">
+        Create an Account
+    </button>
+</form>
+
+{% endblock body %}

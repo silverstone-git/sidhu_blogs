@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+        <title>{% block title %}{% endblock title %}</title>
+	<link rel="icon" type="image/x-icon" href="/static/sidhu_blogs_logo.png">
+</head>
+<body>
+
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <form action='/contact'>
+        <button type='submit'>
+            Contact Me
+        </button>
+    </form>
+    
+    
+    <form {% if loggedin %}action="/dashboard/" {% else %} action="/login" {% endif %} type="POST">
+        {% if loggedin %}
+            <p>
+                {{level}}
+            </p>
+            <button type = "submit">
+                Go to Dashboard
+            </button>
+        {% else %}
+            <button type = "submit">
+                Login / Sign Up
+            </button>
+        {% endif %}
+    </form>
+
+    {% block body %}{% endblock body %}
+</body>
+</html>

@@ -1,0 +1,69 @@
+{% extends 'basic_elements.html' %}
+
+{% block title %}
+    {{ blog_title }}
+{% endblock title %}
+
+
+{% block body %}
+
+    <p>
+        Welcome to the blog page
+    </p>
+
+{% if loggedin %}
+
+{% if blog_dne_savedlist %}
+<form action="/blogs/" method="POST">
+
+    {% csrf_token %}
+    
+    <input type="radio" name="saveit" value="True" style="display:none" checked>
+    <input type="radio" name = "blognameandtitle" value = "{{ blog_name }} {{blog_title}}" style="display:none" id="blognameandtitle" checked>
+    <button type="submit">
+        <p>
+            Click Here to Save this article
+        </p>
+    </button>
+</form>
+{% endif %}
+
+{% if blog_saved %}
+
+<h5>
+    Saved!
+</h5>
+
+{% endif %}
+
+{% endif %}
+
+<h2>
+    {{ blog_title }}
+</h2>
+
+
+{{ blog }}
+
+
+<form action="/blogs/" method="POST">
+    {% csrf_token %}
+    <p>Your Comment Here:</p>
+    <input type = "text" id = "name_input" name = "comment"> <br>
+    <!-- This hidden radio is to ensure that when comment is passed, blog name is also passed back into the view and thus the template again, 
+    thus preventing the situation where there is no blog after comment because no blogname in request-->
+    <input type="radio" name="saveit" value="False" style="display:none" checked>
+    <input type="radio" name = "blognameandtitle" value = "{{ blog_name }} {{blog_title}}" style="display:none" id="blognameandtitle" checked>
+<br>
+    <button type = "submit">
+        Comment
+    </button>
+</form>
+
+<form action="/">
+    <button type="submit">
+        Go to Home Page
+    </button>
+</form>
+
+{% endblock body %}

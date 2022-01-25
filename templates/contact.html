@@ -1,0 +1,43 @@
+{% extends 'basic_elements.html' %}
+
+{% block title %}
+    Contact
+{% endblock title %}
+
+{% block body %}
+<h3>
+	Contact
+</h3>
+
+<p>
+	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+	tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+	quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+	Duis aute irure dolor in reprehenderit in voluptate velit
+	esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+	non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+</p>
+
+<form action='formsendmail' method='POST'>
+	
+	{% if loggedout %}
+	<p>Enter your name</p>
+	<input name='username' type='text'><br><br>
+	
+	<p>Enter your E-Mail Address (for me to reply to)</p><br>
+	<input name='email' type='email'><br><br>
+	{% endif %}
+	
+	{% if loggedin %}
+	<input name='username' type='radio' value='{{ username }}' style='display:none' checked>
+	<input name='email' type='radio' value='{{ email }}' style='display:none' checked>
+	{% endif %}
+	
+	<p>Enter your feedback / message :) </p><br>
+	<input type='text' name='message'><br><br>
+	
+	<button type='submit'>
+		Submit
+	</button>
+</form>
+{% endblock body %}

@@ -1,0 +1,86 @@
+{% extends 'basic_elements.html' %}
+
+{% block title %}
+    Home
+{% endblock title %}
+
+
+{% block body %}
+<h3>
+    This is the home page
+</h3>
+
+
+<p>
+    Consectetur reiciendis aperiam ab blanditiis et. Est architecto adipisci quaerat 
+reprehenderit eligendi Expedita minima obcaecati velit provident ratione. 
+Iste quae ut porro cum ullam. Dolorum accusantium voluptatibus facere veniam
+id amet? Velit nihil quidem reprehenderit vel ab Modi porro perferendis
+voluptas alias reiciendis. Vitae harum quibusdam impedit amet cum unde dict
+. Qui saepe fugit consectetur obcaecati minus. Expedita cum eum sint
+vitae incidunt voluptatibus? Magnam vitae sapiente architecto hic aspernatur. Hic
+omnis modi dignissimos hic numquam Molestiae quia repudiandae quo ab voluptas.
+Nemo mollitia corporis recusandae fugiat optio dolore natus, sed vero,
+officiis, dolore Minus eius repellendus repudiandae reprehenderit velit? Excepturi consectetur
+optio facilis optio natus! Enim minus cum sed iure maiores voluptate
+, eum. Deleniti quibusdam consectetur beatae magni praesentium. Molestiae laboriosam
+sint provident suscipit nesciunt? Fuga possimus nihil provident modi fugit.
+Officia maiores odio veritatis cupiditate eum Quo consectetur voluptate debitis laboriosam iust
+, iste Facere eveniet harum dignissimos nostrum nisi aliquid? Fugit quisquam
+facere libero eum harum? Animi laborum rerum magnam ipsum aliquam Ducimus
+vel molestias optio reiciendis fugiat? Ut nesciunt facilis odio similique amet
+tenetur, in natus, natus. Et quasi soluta quae hic
+inventore Fugit magnam fuga aut aliquam consequuntur qui Animi architecto exercitationem veniam
+perspiciatis dolores. Temporibus excepturi eius modi exercitationem delectus vero. Enim
+corporis ad reiciendis non maxime Eveniet facere voluptatibus earum ipsum fugiat molestiae
+dolorum Atque et error tempora animi at? Quis quaerat ut consectetur
+esse possimus, velit. Maxime optio sint iste dignissimos molestias dolo
+? Earum minus perspiciatis reprehenderit sapiente maxime! Ratione dolores sequi nisi
+natus optio impedit aut! Provident saepe vero eos repellat quas,
+exercitationem, voluptate unde Tenetur maiores in sequi aliquid totam cumque dolorum
+Delectus id nulla recusandae voluptates reiciendis architecto amet fugit, magnam ver
+? Nesciunt tempore at odio officiis dolores commodi Minima obcaecati amet id
+iure nesciunt Totam aspernatur est quod amet itaque? Illo accusantium a
+quia quae rem, a. Doloremque nesciunt earum temporibus reprehenderit repellendus
+modi? Unde enim facere exercitationem ut veniam. Quidem debitis maiores
+ea a culpa Possimus minima dicta officia dolor ut. Illo repudiandae
+quibusdam maiores facere quibusdam quos incidunt Delectus quo provident neque mollitia iure
+Commodi expedita provident modi fugiat veniam enim? Quidem excepturi expedita ex
+harum iure. Hic quam autem vitae vero cum? Accusamus voluptatem
+sapiente ea iusto deleniti dolores ab cumque? Officia necessitatibus quos dicta
+odit expedita. Facere voluptatem asperiores ab asperiores vel Error eos sit
+quo totam perspiciatis Facere doloremque labore sit dolores vitae laboriosam Minus nesciunt
+consequatur esse quaerat dolore? Dignissimos inventore ipsum illum quia quae vitae
+Eligendi laboriosam necessitatibus suscipit obcaecati fugit? Doloribus excepturi soluta mollitia saepe
+facere. Fuga minus aut ducimus obcaecati sequi, amet Dolores nihil
+</p>
+{% load static %}
+<img src="{% static 'sea.jpg' %}" alt="Sea water, blue" height='500'>
+<p>
+quisquam quos consequatur dignissimos. Quibusdam dignissimos accusamus laborum suscipit laborum!
+Commodi officiis quos nam quam repudiandae Necessitatibus nulla asperiores non consequatur voluptatum ducimus ullam minus, molestiae, reprehenderit suscipit Voluptate 
+error laborum enim quas quas! Ab facere porro culpa tenetur voluptatum
+architecto. Consequuntur laborum et laboriosam similique vitae Molestiae earum ducimus soluta
+ullam quos Obcaecati doloribus voluptates et ab commodi similique! Perspiciatis labore
+neque fugit totam rem
+</p>
+
+<form method="POST" action="blogs/">
+    {% csrf_token %}
+    <p>
+        The blog to be shown goes here
+    </p>
+
+    <input type="radio" name = "saveit" value = "False" style="display:none" id="saveit" checked>
+
+    {% for blog_title,blog_name in blog_heads %}
+        <input type="radio" name = "blognameandtitle" value = "{{ blog_name }} {{blog_title}}" id="blogname">{{ blog_title }}<br>
+    {% endfor %}
+
+    <button type="submit">
+        Go to blogs/
+    </button>
+
+</form>
+
+{% endblock body %}
