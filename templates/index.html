@@ -1,8 +1,14 @@
 {% extends 'basic_elements.html' %}
+{% load static %}
+
 
 {% block title %}
     Home
 {% endblock title %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/tailwind-output.css' %}">
+{% endblock head %}
 
 
 {% block body %}
@@ -54,7 +60,6 @@ consequatur esse quaerat dolore? Dignissimos inventore ipsum illum quia quae vit
 Eligendi laboriosam necessitatibus suscipit obcaecati fugit? Doloribus excepturi soluta mollitia saepe
 facere. Fuga minus aut ducimus obcaecati sequi, amet Dolores nihil
 </p>
-{% load static %}
 <img src="{% static 'sea.jpg' %}" alt="Sea water, blue" height='500'>
 <p>
 quisquam quos consequatur dignissimos. Quibusdam dignissimos accusamus laborum suscipit laborum!

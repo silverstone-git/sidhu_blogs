@@ -3,6 +3,7 @@
 <head>
         <meta charset="UTF-8">
         <title>{% block title %}{% endblock title %}</title>
+        {% block head %}{% endblock head %}
 </head>
 <body>
 
@@ -27,11 +28,11 @@
             <p>
                 {{level}}
             </p>
-            <button type = "submit">
+            <button type = "submit" class=" bg-red-400">
                 Go to Dashboard
             </button>
         {% else %}
-            <button type = "submit">
+            <button type = "submit" class=" bg-red-400">
                 Login / Sign Up
             </button>
         {% endif %}
