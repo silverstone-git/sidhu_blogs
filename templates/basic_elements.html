@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
         <meta charset="UTF-8">
+        {% load static %}
         <title>{% block title %}{% endblock title %}</title>
-        {% block head %}{% endblock head %}
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
 
@@ -28,11 +29,11 @@
             <p>
                 {{level}}
             </p>
-            <button type = "submit" class=" bg-red-400">
+            <button type = "submit" class=" dashboardbutton">
                 Go to Dashboard
             </button>
         {% else %}
-            <button type = "submit" class=" bg-red-400">
+            <button type = "submit" class=" dashboardbutton">
                 Login / Sign Up
             </button>
         {% endif %}
