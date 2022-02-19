@@ -2,9 +2,14 @@
 <html lang="en">
 <head>
         <meta charset="UTF-8">
-        {% load static %}
         <title>{% block title %}{% endblock title %}</title>
-        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <style>
+            .frontpagetext {
+                font: bold;
+                size: 2em;
+                padding: 50px 5px 5px 5px;
+            }
+        </style>
 </head>
 <body>
 
