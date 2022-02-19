@@ -3,12 +3,79 @@
 <head>
         <meta charset="UTF-8">
         <title>{% block title %}{% endblock title %}</title>
+
+        <!--Roboto Bold, Regular and Lobster font Font-->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Roboto:ital,wght@0,400;1,700&display=swap" rel="stylesheet"> 
+
         <style>
             .frontpagetext {
                 font: bold;
                 size: 2em;
                 padding: 50px 5px 5px 5px;
             }
+
+            .myheading {
+                text-align: center;
+                font-size: 40px;
+            }
+
+            .messages {
+                background-color: darkslategray;
+                color: white;
+                border: 2px solid #00FF00;
+                border-radius: 10px;
+                padding-top: 10px;
+                padding-bottom: 10px;
+                font: bold;
+                font-family: 'Roboto', sans-serif;
+            }
+
+            .navBar {
+                background-color: darkslategray;
+                display: flex;
+                flex-direction: row;
+                justify-content: end;
+                padding-top: 10px;
+                padding-bottom: 10px;
+            }
+
+            .headingDiv {
+                font-family: 'Lobster', cursive;
+                font-size: 30px;
+                margin-right: 28%;
+            }
+
+            .headingDiv > a {
+                color: white;
+            }
+
+            .cdButtons {
+                text-align: center;
+                display: flex;
+                flex-direction: row;
+            }
+
+            .navButton {
+                border: 1px solid white;
+                padding: 5px 5px 5px 5px;
+                border-radius: 5px;
+                background-color: transparent;
+                color: white;
+                font-size: 17px;
+                transition: all;
+                transition-duration: 50ms;
+                margin-right: 15px;
+                margin-top: 3px;
+            }
+
+            .navButton:hover {
+                background-color: white;
+                color: black;
+                cursor: pointer;
+            }
+
         </style>
 </head>
 <body>
@@ -22,28 +89,41 @@
     </ul>
     {% endif %}
 
-    <form action='/contact'>
-        <button type='submit'>
-            Contact Me
-        </button>
-    </form>
-    
-    
-    <form {% if loggedin %}action="/dashboard/" {% else %} action="/login" {% endif %} type="POST">
-        {% if loggedin %}
-            <p>
-                {{level}}
-            </p>
-            <button type = "submit" class=" dashboardbutton">
-                Go to Dashboard
-            </button>
-        {% else %}
-            <button type = "submit" class=" dashboardbutton">
-                Login / Sign Up
-            </button>
-        {% endif %}
-    </form>
+    <nav class="navBar">
 
+
+        <div class="headingDiv">
+            <a href="/">
+                Please Explain Me 🧠
+            </a>
+        </div>
+
+        <div class="cdButtons">
+
+            <form action='/contact'>
+                <button type='submit' class="navButton" >
+                    Contact Me
+                </button>
+            </form>
+            
+            
+            <form {% if loggedin %}action="/dashboard/" {% else %} action="/login" {% endif %} type="POST" class="dashboardForm">
+                {% if loggedin %}
+                    <p>
+                        {{level}}
+                    </p>
+                    <button type = "submit" class="navButton">
+                        Go to Dashboard
+                    </button>
+                {% else %}
+                    <button type = "submit" class="navButton">
+                        Login / Sign Up
+                    </button>
+                {% endif %}
+            </form>
+
+        </div>
+    </nav>
     {% block body %}{% endblock body %}
 </body>
 </html>
