@@ -16,7 +16,7 @@
                 padding: 50px 5px 5px 5px;
             }
 
-            .myheading {
+            .myArticleHeading {
                 text-align: center;
                 font-size: 40px;
             }
@@ -44,7 +44,13 @@
             .headingDiv {
                 font-family: 'Lobster', cursive;
                 font-size: 30px;
-                margin-right: 28%;
+                /*margin-right: 28%;*/
+                width: 100%;
+                width: -moz-available;
+                width: -webkit-fill-available;
+                display: flex;
+                justify-content: center;
+                padding-top: 5px;
             }
 
             .headingDiv > a {
@@ -55,6 +61,7 @@
                 text-align: center;
                 display: flex;
                 flex-direction: row;
+                width: 300px;
             }
 
             .navButton {
@@ -67,13 +74,30 @@
                 transition: all;
                 transition-duration: 50ms;
                 margin-right: 15px;
-                margin-top: 3px;
+                margin-top: 4px;
             }
 
             .navButton:hover {
                 background-color: white;
                 color: black;
                 cursor: pointer;
+            }
+
+            #headingDivSmall {
+                display: none;
+            }
+
+            @media screen and (max-width: 707px) {
+                .navBar {
+                    display: none;
+                }
+
+                #headingDivSmall {
+                    display: block;
+                    margin-top: 15px;
+                    text-align: center;
+                    font-size: 20px;
+                }
             }
 
         </style>
@@ -124,6 +148,17 @@
 
         </div>
     </nav>
+
+    <div id="headingDivSmall">
+        <a href="/" style="color: black;">
+            Please Explain Me 🧠
+        </a>
+    </div>
+    <!--<script>
+        MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+    </script>-->
     {% block body %}{% endblock body %}
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </body>
 </html>
