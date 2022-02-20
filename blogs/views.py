@@ -52,7 +52,11 @@ def user_fetchcontextinator(thename, get_desc = False):
 def getblog(blogname, retrieve_content = True):
     article_row = article.objects.get(name = blogname)
     if retrieve_content:
-        return article_row.content
+        contentlist = eval(article_row.content)
+#        contentstr = ""
+#        for myline in contentlist:
+#            contentstr += myline
+        return contentlist
     else:
         return article_row.title
 
@@ -72,7 +76,7 @@ def json2list(thejsonstring):
         - add comments section, upvote button, save article button (if logged in) in the blog html
         - update user last login and add no_of_logins in reader object every time the user logs in or comments something
         - take photo from user, send it from template to view,
-            compress it, upload it on vps as a request and take a photo url as a response
+            compress it, upload it on cdn / bucket as a request and take a photo url as a response
             , add the photo link to reader's object dp for the user, process it, and 
         - let the user upload an article if the level has reached writer
     """

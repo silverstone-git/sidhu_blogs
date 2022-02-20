@@ -134,7 +134,7 @@
             <form {% if loggedin %}action="/dashboard/" {% else %} action="/login" {% endif %} type="POST" class="dashboardForm">
                 {% if loggedin %}
                     <p>
-                        {{level}}
+                        Welcome fellow {{level}}
                     </p>
                     <button type = "submit" class="navButton">
                         Go to Dashboard

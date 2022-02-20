@@ -43,7 +43,11 @@
 </h2>
 
 
-{{ blog }}
+{% for line in blog %}
+<p>
+    {{line}}
+</p>
+{% endfor %}
 
 
 <form action="/blogs/" method="POST">
