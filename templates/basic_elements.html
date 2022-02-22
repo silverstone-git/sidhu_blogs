@@ -9,11 +9,15 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Roboto:ital,wght@0,400;1,700&display=swap" rel="stylesheet"> 
 
+        {% block head %}
+        {% endblock head%}
+
         <style>
             .frontpagetext {
                 font: bold;
-                size: 2em;
+                size: 3em;
                 padding: 50px 5px 5px 5px;
+                text-align: center;
             }
 
             .myArticleHeading {
@@ -154,9 +158,6 @@
             Please Explain Me 🧠
         </a>
     </div>
-    <!--<script>
-        MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
-    </script>-->
     {% block body %}{% endblock body %}
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
