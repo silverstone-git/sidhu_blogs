@@ -102,13 +102,18 @@ def blog(request):
 
     comment = mydict.get("comment")
     
-    try:
-        blog_name_and_title = mydict['blognameandtitle'].split(" ")
+    blog_name_and_title = mydict['blognameandtitle'].split(" ")
+    """
+
+    This was executed when the input was a radio form, and nothing was selected, but now its just by buttons
+    and noe user can't click on a button if the article isn't selected because clicking the button itself marks  the input checked
+
     except KeyError:
         # this key can only not exist when the user types in this url randomly
         # or clicks the go to blog button without selection
         messages.error(request, 'Please select a blog before going to the blog!')
         return render(request, 'noselection.html')
+    """
     blog_title = " ".join(blog_name_and_title[1:])
     blog_name = blog_name_and_title[0]
     

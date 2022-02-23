@@ -8,25 +8,26 @@
 
 
     <p class="frontpagetext">
-        The blogs are listed below, choose one and then
-        got to blog...
+        Latest Posts
     </p>
 
     <form method="POST" action="blogs/">
         {% csrf_token %}
-        <p>
-            The blog to be shown goes here
-        </p>
 
         <input type="radio" name = "saveit" value = "False" style="display:none" id="saveit" checked>
 
         {% for blog_title,blog_name in blog_heads %}
-            <input type="radio" name = "blognameandtitle" value = "{{ blog_name }} {{blog_title}}" id="blogname">{{ blog_title }}<br>
+        <div class="submitButtonContainer">
+            <button onclick="document.getElementById('radio_{{ blog_name }}').checked=true" type="submit">
+                {{ blog_title }}
+            </button>
+            <input style="display: none;" type="radio" name = "blognameandtitle" value = "{{ blog_name }} {{blog_title}}" id="radio_{{ blog_name }}">
+        </div>
         {% endfor %}
 
-        <button type="submit" class=" submitbutton">
+        <!--<button type="submit" >
             Go to blogs/
-        </button>
+        </button>-->
 
     </form>
 
