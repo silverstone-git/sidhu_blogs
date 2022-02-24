@@ -1,4 +1,5 @@
 from django.db import models
+from time import time
 
 # Create your models here.
 
@@ -20,5 +21,7 @@ class reader(models.Model):
 
 
 class comment(models.Model):
-    content = models.CharField(max_length=2000)
-    date_posted = models.DateField()
+    comment_id = models.CharField(default = str(time()), max_length=300)
+    content = models.CharField(default = "Bruh", max_length=2000)
+    author = models.CharField(default = "Anonymous", max_length=122)
+    blogname = models.CharField(default = "origin_13_jan_22", max_length=300)

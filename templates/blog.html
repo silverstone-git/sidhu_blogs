@@ -69,6 +69,16 @@
     </button>
 </form>
 
+{% for comment in comments %}
+    <p>
+    {% for key,value in comment.items %}
+        {% if key == "content" or key == "author" %}
+            {{key}} : {{value}}
+        {% endif %}
+    {% endfor %}
+    </p>
+{% endfor %}
+
 <form action="/">
     <button type="submit">
         Go to Home Page

@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from blogs.models import comment,reader,article
 from datetime import date
+from time import time
 
 # Create your views here.
 
@@ -66,6 +67,7 @@ def json2list(thejsonstring):
 
     """
     tbd- upload page for articles and a retrieval system
+        - a footer in template
         - add a saved json in reader model, make comments' hash code using datetime and add them to 
         - add a hashcode entry in the model of both comment and article, so that associated comments can be loaded in the template
         - add reader created datetime, last login datetime, no of logins, no of saved, and profile photo url in reader model 
@@ -79,6 +81,7 @@ def json2list(thejsonstring):
             compress it, upload it on cdn / bucket as a request and take a photo url as a response
             , add the photo link to reader's object dp for the user, process it, and 
         - let the user upload an article if the level has reached writer
+        - a service for forgot password
     """
 
     pass
@@ -100,7 +103,7 @@ def blog(request):
 
 
 
-    comment = mydict.get("comment")
+    commentstr = mydict.get("comment")
     
     blog_name_and_title = mydict['blognameandtitle'].split(" ")
     """
@@ -140,7 +143,7 @@ def blog(request):
     if eval(mydict["saveit"]):
         # the case when user presses save the article button
 
-        # picking the reader row and then editing it if no error in 2nd line
+        # picking the reader row and then editing it
         myrow = reader.objects.get(username = request.user.username)
         recieved_saved_articles = eval(myrow.saved_articles)
         recieved_saved_articles.append(blog_name)
@@ -151,17 +154,26 @@ def blog(request):
         messagestr = "The article has been saved"
         messages.add_message(request, messages.INFO, messagestr)
 
-
-
+    comment_obj_list = list(comment.objects.filter(blogname = blog_name))
 
     # tbd - handle the scenario where user enters blog url randomly, put a if post: maybe
     #blog_title = getblog(blog_name, retrieve_content = False)
     # -- no need, I got it from context, both index and blog save templates, so, its before the condition
     blog_content = getblog(blog_name)
-    if comment:
+    if commentstr:
         messagestr = "Your comment has been posted"
         messages.add_message(request, messages.INFO, messagestr)
-        # store the comment variable by model here
+        # storing the comment variable by model here
+        user_name = request.user.username
+        if user_name == "":
+            user_name = "Anonymous"
+        new_comment_obj = comment(blogname = blog_name, author = user_name, comment_id = str(time()), content = commentstr)
+        new_comment_obj.save()
+        comment_obj_list.append(new_comment_obj)
+
+    comment_dir_list = []
+    for comment_obj in comment_obj_list:
+        comment_dir_list.append(vars(comment_obj))
 
     # give a comment lists in the template
     # and somehow manage to return title from index template as well, so that view can recieve it and give it to blog's template
@@ -173,7 +185,8 @@ def blog(request):
         "blog_name" : blog_name,
         "loggedin" : loggedin,
         "blog_dne_savedlist" : blog_dne_savedlist,
-        "blog_saved" : blog_saved
+        "blog_saved" : blog_saved,
+        "comments" : comment_dir_list
     })
     
 
