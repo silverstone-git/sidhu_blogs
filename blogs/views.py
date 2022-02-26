@@ -67,10 +67,10 @@ def json2list(thejsonstring):
 
     """
     tbd- upload page for articles and a retrieval system
-        - a footer in template
-        - add a saved json in reader model, make comments' hash code using datetime and add them to 
-        - add a hashcode entry in the model of both comment and article, so that associated comments can be loaded in the template
-        - add reader created datetime, last login datetime, no of logins, no of saved, and profile photo url in reader model 
+        - a footer in template  // tried, only works if page is full enough
+        - add a saved json in reader model, make comments' hash code using datetime and add them to     // done
+        - add a hashcode entry in the model of both comment and article, so that associated comments can be loaded in the template  // added article name in comment model
+        - add reader created datetime, last login datetime, no of logins, no of saved, and profile photo url in reader model
         - add upvotes and user's name in comments model
         - add an article id using datetime in model and use it to save to reader's saved json
         - make migrations

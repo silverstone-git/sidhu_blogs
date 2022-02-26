@@ -72,11 +72,23 @@
 {% for comment in comments %}
     <p>
     {% for key,value in comment.items %}
-        {% if key == "content" or key == "author" %}
-            {{key}} : {{value}}
+
+        {% if key == "no_of_upvotes" %}
+            <p class="noOfUpvotes">
+                Upvoted by {{ value }}
+            </p>
+        {% elif key == "author" %}
+            <p class="commentAuthor">
+                Posted by {{ value }}
+            </p>
+        {% elif key == "content" %}
+        <p class="commentContent">
+            {{ value }}
+        </p>
         {% endif %}
     {% endfor %}
     </p>
+    <hr>
 {% endfor %}
 
 <form action="/">
