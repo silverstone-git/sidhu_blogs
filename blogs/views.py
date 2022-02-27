@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
 from django.contrib.auth.models import User
 from blogs.models import comment,reader,article
-from datetime import date
+from datetime import date, datetime
 from time import time
 
 # Create your views here.
@@ -68,6 +68,7 @@ def json2list(thejsonstring):
     """
     tbd- upload page for articles and a retrieval system
         - a footer in template  // tried, only works if page is full enough
+        - posted date in comments
         - add a saved json in reader model, make comments' hash code using datetime and add them to     // done
         - add a hashcode entry in the model of both comment and article, so that associated comments can be loaded in the template  // added article name in comment model
         - add reader created datetime, last login datetime, no of logins, no of saved, and profile photo url in reader model
@@ -174,6 +175,12 @@ def blog(request):
     comment_dir_list = []
     for comment_obj in comment_obj_list:
         comment_dir_list.append(vars(comment_obj))
+    
+    #print("The dict to be passed to template is: ", comment_dir_list)
+    for comment_item in comment_dir_list:
+        for key in comment_item:
+            if key == "comment_id":
+                comment_item[key] = datetime.utcfromtimestamp(int(eval(comment_item[key]))).strftime('%Y-%m-%d %H:%M:%S')
 
     # give a comment lists in the template
     # and somehow manage to return title from index template as well, so that view can recieve it and give it to blog's template

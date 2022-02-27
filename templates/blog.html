@@ -85,6 +85,10 @@
         <p class="commentContent">
             {{ value }}
         </p>
+        {% elif key == "comment_id" %}
+        <p class="commentAuthor">
+            Posted at - {{value}}
+        </p>
         {% endif %}
     {% endfor %}
     </p>
