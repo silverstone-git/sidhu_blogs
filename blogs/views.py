@@ -68,7 +68,10 @@ def json2list(thejsonstring):
     """
     tbd- upload page for articles and a retrieval system
         - a footer in template  // tried, only works if page is full enough
-        - posted date in comments
+        - posted date in comments   // done
+        - a hamburger menu for mobile homepage
+        - rate limiting comments, user accounts
+        - showing last 50 comments and only showing more when user clicks
         - add a saved json in reader model, make comments' hash code using datetime and add them to     // done
         - add a hashcode entry in the model of both comment and article, so that associated comments can be loaded in the template  // added article name in comment model
         - add reader created datetime, last login datetime, no of logins, no of saved, and profile photo url in reader model
@@ -86,6 +89,22 @@ def json2list(thejsonstring):
     """
 
     pass
+
+
+def unpack_objects_to_dict(list_of_objects):
+    # unpack the object list into python traversible disctionaries' list to give to template
+    dir_list = []
+    for obj in list_of_objects:
+        dir_list.append(vars(obj))
+    return dir_list
+
+
+def make_comment_time_user_readable(comment_dicts):
+    # to convert the timestamp comment id into a user readable format and put it in a list of dicts to be passed to template
+    for comment_item in comment_dicts:
+        for key in comment_item:
+            if key == "comment_id":
+                comment_item[key] = datetime.utcfromtimestamp(int(eval(comment_item[key]))).strftime('%Y-%m-%d %H:%M:%S')
 
 
 def blog(request):
@@ -155,7 +174,11 @@ def blog(request):
         messagestr = "The article has been saved"
         messages.add_message(request, messages.INFO, messagestr)
 
-    comment_obj_list = list(comment.objects.filter(blogname = blog_name))
+    # filtering last 50 comments from model
+
+    comment_obj_list = list(comment.objects.filter(blogname = blog_name).exclude(author = "Anonymous"))
+    anonymous_comment_obj_list = list(comment.objects.filter(blogname = blog_name, author = "Anonymous"))
+
 
     # tbd - handle the scenario where user enters blog url randomly, put a if post: maybe
     #blog_title = getblog(blog_name, retrieve_content = False)
@@ -172,15 +195,15 @@ def blog(request):
         new_comment_obj.save()
         comment_obj_list.append(new_comment_obj)
 
-    comment_dir_list = []
-    for comment_obj in comment_obj_list:
-        comment_dir_list.append(vars(comment_obj))
+    anonymous_comment_dir_list = unpack_objects_to_dict(anonymous_comment_obj_list)
+    comment_dir_list = unpack_objects_to_dict(comment_obj_list)
+
+    print(anonymous_comment_dir_list)
+    print(comment_dir_list)
+
+    make_comment_time_user_readable(anonymous_comment_dir_list)
+    make_comment_time_user_readable(comment_dir_list)
     
-    #print("The dict to be passed to template is: ", comment_dir_list)
-    for comment_item in comment_dir_list:
-        for key in comment_item:
-            if key == "comment_id":
-                comment_item[key] = datetime.utcfromtimestamp(int(eval(comment_item[key]))).strftime('%Y-%m-%d %H:%M:%S')
 
     # give a comment lists in the template
     # and somehow manage to return title from index template as well, so that view can recieve it and give it to blog's template
@@ -193,7 +216,8 @@ def blog(request):
         "loggedin" : loggedin,
         "blog_dne_savedlist" : blog_dne_savedlist,
         "blog_saved" : blog_saved,
-        "comments" : comment_dir_list
+        "comments" : comment_dir_list,
+        "anonymous_comments" : anonymous_comment_dir_list
     })
     
 

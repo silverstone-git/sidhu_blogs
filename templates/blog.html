@@ -69,6 +69,28 @@
     </button>
 </form>
 
+
+<button onclick = "showPublic()" id = "showPublicButton">Show Anonymous comments</button>
+<button onclick = "showUser()" id = "showUserButton">Show User comments</button>
+
+<script>
+function showPublic() {
+    document.getElementById("user_comments").style.display = "none";
+    document.getElementById("public_comments").style.display = "block";
+    document.getElementById("showPublicButton").style.display = "none";
+    document.getElementById("showUserButton").style.display = "block";
+}
+
+function showUser() {
+    document.getElementById("user_comments").style.display = "block";
+    document.getElementById("public_comments").style.display = "none";
+    document.getElementById("showUserButton").style.display = "none";
+    document.getElementById("showPublicButton").style.display = "block";
+}
+</script>
+
+<div class = "user_comments" id = "user_comments" style = "display:block">
+
 {% for comment in comments %}
     <p>
     {% for key,value in comment.items %}
@@ -94,6 +116,40 @@
     </p>
     <hr>
 {% endfor %}
+
+</div>
+
+<div class = "public_comments" id = "public_comments" style = "display:none">
+
+{% for comment in anonymous_comments %}
+    <p>
+    {% for key,value in comment.items %}
+
+        {% if key == "no_of_upvotes" %}
+            <p class="noOfUpvotes">
+                Upvoted by {{ value }}
+            </p>
+        {% elif key == "author" %}
+            <p class="commentAuthor">
+                Posted by {{ value }}
+            </p>
+        {% elif key == "content" %}
+        <p class="commentContent">
+            {{ value }}
+        </p>
+        {% elif key == "comment_id" %}
+        <p class="commentAuthor">
+            Posted at - {{value}}
+        </p>
+        {% endif %}
+    {% endfor %}
+    </p>
+    <hr>
+{% endfor %}
+
+</div>
+
+<button>Show all</button>
 
 <form action="/">
     <button type="submit">
