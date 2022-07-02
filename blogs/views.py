@@ -69,6 +69,7 @@ def json2list(thejsonstring):
     tbd- upload page for articles and a retrieval system
         - a footer in template  // tried, only works if page is full enough
         - posted date in comments   // done
+        - separately show user and public comments  // done
         - a hamburger menu for mobile homepage
         - rate limiting comments, user accounts
         - showing last 50 comments and only showing more when user clicks
@@ -198,8 +199,8 @@ def blog(request):
     anonymous_comment_dir_list = unpack_objects_to_dict(anonymous_comment_obj_list)
     comment_dir_list = unpack_objects_to_dict(comment_obj_list)
 
-    print(anonymous_comment_dir_list)
-    print(comment_dir_list)
+    #print(anonymous_comment_dir_list)
+    #print(comment_dir_list)
 
     make_comment_time_user_readable(anonymous_comment_dir_list)
     make_comment_time_user_readable(comment_dir_list)
