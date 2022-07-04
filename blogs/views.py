@@ -265,6 +265,10 @@ def log_out(request):
 
 def contact(request):
     # give the contact and about info here with a feedback section
+
+    if request.method == "POST":
+        messagestr = "Thank you for your feedback!"
+        messages.add_message(request, messages.INFO, messagestr)
     context = {}
     if request.user.is_authenticated:
         thename = request.user.username

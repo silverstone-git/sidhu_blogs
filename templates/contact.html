@@ -10,16 +10,14 @@
 </h3>
 
 <p>
-	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-	tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-	quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-	Duis aute irure dolor in reprehenderit in voluptate velit
-	esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-	non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    Any Feedback relating to the blogs, the language, the back end logic problems, or front end suggestions are welcome
+    or, write directly to me at-<br> <br>
+    <a class = "mailLink" href="mailto:aryan_sidhwani@protonmail.com">aryan_sidhwani@protonmail.com</a>
 </p>
 
-<form action='formsendmail' method='POST'>
+<form action='/contact/' method='POST'>
 	
+    {% csrf_token %}
 	{% if loggedout %}
 	<p>Enter your name</p>
 	<input name='username' type='text'><br><br>
