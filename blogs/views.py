@@ -4,8 +4,10 @@ from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
 from django.contrib.auth.models import User
 from blogs.models import comment,reader,article
+from django.core.mail import send_mail, BadHeaderError
 from datetime import date, datetime
 from time import time
+from django.conf import settings
 
 # Create your views here.
 
@@ -267,6 +269,19 @@ def contact(request):
     # give the contact and about info here with a feedback section
 
     if request.method == "POST":
+        subject = "New Feedback from pem blog! by {}".format(request.POST.get('username'))
+        email_message = request.POST.get('message')
+        print(type(email_message))
+        sender_email = request.POST.get('email')
+        print(type(sender_email))
+
+        final_message = email_message + "\n ~ " + sender_email
+
+        try:
+            send_mail(subject, final_message, settings.MY_SENDER_EMAIL, [settings.MY_RECEIVER_EMAIL])
+        except BadHeaderResponse:
+            return HttpResponse('Invalid header found.')
+
         messagestr = "Thank you for your feedback!"
         messages.add_message(request, messages.INFO, messagestr)
     context = {}
