@@ -99,7 +99,6 @@
 
 
             #navExpander {
-                background-color: green;
                 color: white;
                 display: none;
             }
@@ -109,6 +108,7 @@
 
                 .navBar {
                     background-color: white;
+                    padding-left: 0;
                 }
 
                 .headingDiv > a {
@@ -127,7 +127,11 @@
 
                 #navExpander {
                     display: block;
-                    background-color: black;
+                    background-color: white;
+                    color: black;
+                    padding-top: 20px;
+                    padding-left: 10px;
+                    float: left;
                 }
 
                 /*
@@ -149,7 +153,9 @@
 
             #closeButton {
                 position: absolute;
-                right: 30px;
+                padding-top: 20px;
+                top: 25px;
+                left: 20px;
                 display: none;
             }
 
@@ -223,43 +229,55 @@
 
     <script>
       function expandSideNav() {
-        document.getElementById("navBar").style.width="250px";
+        //document.getElementById("navBar").style.width="250px";
         document.getElementById("closeButtonLink").style.width="auto";
         document.getElementById("closeButtonLink").style.display="block";
         document.getElementById("closeButton").style.visibility="visible";
         document.getElementById("navBar").style.display="flex";
         document.getElementById("closeButton").style.display="flex";
         document.getElementById("closeButton").style.zIndex="3";
-        document.getElementById("closeButtonLink").style.color="black";
+        document.getElementById("closeButton").style.color="white";
+        const navButtons = document.getElementsByClassName("navButton");
+        for(let i = 0; i < navButtons.length; i ++) {
+            navButtons[i].style.padding="20px";
+            navButtons[i].style.marginTop="20px";
+        }
+        document.getElementById("closeButtonLink").style.color="white";
         document.getElementById("navExpander").style.display="none";
         document.getElementById("cdButtons").style.display="flex";
-        document.getElementById("cdButtons").style.backgroundColor="#696969";
+        document.getElementById("cdButtons").style.backgroundColor="#a3a3a3";
         document.getElementById("cdButtons").style.flexDirection="column";
         document.getElementById("cdButtons").style.position="absolute";
-        document.getElementById("cdButtons").style.right="0px";
+        document.getElementById("cdButtons").style.left="0px";
         document.getElementById("cdButtons").style.top="0px";
         document.getElementById("cdButtons").style.bottom="0px";
         
       }
 
       function closeSideNav() {
-        document.getElementById("headingDiv").style.display="block";
-        document.getElementById("navBar").style.display="flex";
+        document.getElementById("headingDiv").style.display="flex";
+        //document.getElementById("navBar").style.justifyContent="end";
         document.getElementById("closeButton").style.display="none";
         document.getElementById("closeButtonLink").style.display="none";
-        document.getElementById("navExpander").style.display="flex";
+        document.getElementById("navExpander").style.display="block";
         document.getElementById("cdButtons").style.display="none";
+        const navButtons = document.getElementsByClassName("navButton");
+        for(let i = 0; i < navButtons.length; i ++) {
+            navButtons[i].style.padding="5px";
+            navButtons[i].style.marginTop="5px";
+        }
       }
     </script>
 
-    <div id="navExpander" class="navExpander">
-      <button onclick="expandSideNav()">
-        <i class="fas fa-bars"></i>
-      </button>
-    </div>
 
 
     <ul class="navBar" id="navBar">
+
+    <div>
+      <div onclick="expandSideNav()" id="navExpander" class="navExpander">
+        <i class="fas fa-bars"></i>
+      </div>
+    </div>
 
         <div class="headingDiv" id="headingDiv">
             <a href="/">
@@ -268,12 +286,14 @@
         </div>
 
 
+
+
         <li id="closeButton"> <a id="closeButtonLink" href="javascript:void(0)" onclick="closeSideNav()">&times;</a></li>
 
         <div class="cdButtons" id = "cdButtons">
 
             <form action='/contact'>
-                <button type='submit' class="navButton" >
+                <button type='submit' id="contactButton" class="navButton" >
                     Contact Me
                 </button>
             </form>

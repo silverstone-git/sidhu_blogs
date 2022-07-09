@@ -72,7 +72,8 @@ def json2list(thejsonstring):
         - a footer in template  // tried, only works if page is full enough
         - posted date in comments   // done
         - separately show user and public comments  // done
-        - a hamburger menu for mobile homepage
+        - dark mode
+        - a hamburger menu for mobile homepage  // done
         - rate limiting comments, user accounts
         - showing last 50 comments and only showing more when user clicks
         - add a saved json in reader model, make comments' hash code using datetime and add them to     // done
@@ -82,7 +83,7 @@ def json2list(thejsonstring):
         - add an article id using datetime in model and use it to save to reader's saved json
         - make migrations
         - evaluate and update level accordingly every time the user logs in
-        - add comments section, upvote button, save article button (if logged in) in the blog html
+        - add comments section, upvote button, save article button (if logged in) in the blog html  // done, except upvotes button
         - update user last login and add no_of_logins in reader object every time the user logs in or comments something
         - take photo from user, send it from template to view,
             compress it, upload it on cdn / bucket as a request and take a photo url as a response
@@ -279,8 +280,8 @@ def contact(request):
 
         try:
             send_mail(subject, final_message, settings.MY_SENDER_EMAIL, [settings.MY_RECEIVER_EMAIL])
-        except BadHeaderResponse:
-            return HttpResponse('Invalid header found.')
+        except:
+            return HttpResponse('My Free SMTP server has given up on me, just hmu on instagram @silverstonium')
 
         messagestr = "Thank you for your feedback!"
         messages.add_message(request, messages.INFO, messagestr)
