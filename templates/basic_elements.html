@@ -103,8 +103,51 @@
                 display: none;
             }
 
+            footer {
+                background-color: rgb(16, 29, 29);
+                color: whitesmoke;
+                position: absolute;
+                display: flex;
+                bottom: 0px;
+                right: 0px;
+                left: 0px;
+                justify-content: center;
+            }
+
+            #DOlink:hover {
+                color: aqua;
+                font: bold;
+                cursor: pointer;
+                text-decoration: underline;
+            }
+
+            #DOlink {
+                color: rgb(255, 237, 79);
+            }
+            
+            footer > p {
+                display: flex;
+                padding: 10px;
+            }
+            
+            footer > div {
+                display: none;
+            }
 
             @media screen and (max-width: 707px) {
+                
+
+                footer > p {
+                    display: none;
+                }
+                
+                
+                footer > div {
+                    display: flex;
+                    flex-direction: column;
+                    padding: 10px;
+                }
+                
 
                 .navBar {
                     background-color: white;
@@ -176,6 +219,16 @@
             .commentContent {
                 font-size: 20px;
             }
+            
+            .darkMode {
+                background-color: rgb(43, 43, 43);
+                color: white;
+            }
+            
+            .lightMode {
+                background-color: white;
+                color: black;
+            }
 
             /*
             .mailLink {
@@ -195,24 +248,11 @@
             .mailLink:hover {
                 color: white;
                 background-color: black;
+            
             }
             
-            footer {
-                background-color: rgb(16, 29, 29);
-                color: whitesmoke;
-            }
-
-            footer > a:hover {
-                color: aqua;
-                font: bold;
-                cursor: pointer;
-                text-decoration: underline;
-            }
-
-            footer > a {
-                color: azure;
-            }
             */
+            
 
         </style>
 </head>
@@ -318,29 +358,44 @@
 
     </ul>
 
-<!--
-    <div id="headingDivSmall">
-        <a href="/" style="color: black;">
-            Please Explain Me 🧠
-        </a>
-    </div>
--->
+    <button onclick="turnOnDarkMode();">
+        Turn on Dark Mode
+    </button>
+    
+    
+    <script>
+        function turnOnDarkMode() {
+            document.body.classList.toggle("darkMode")
+        }
+    </script>
 
 
     {% block body %}{% endblock body %}
-    <!--
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
     <footer>
         <p>
-            Please explain Me
+            &copy; Please explain Me 2022
         </p>
         <p> Powered by 
-            <a href="https://www.digitalocean.com/?refcode=c6bc600d254c&utm_campaign=Referral_Invite&utm_medium=Referral_Program&utm_source=badge" target=”_blank”>
-                Digital Ocean
+            <a id="DOlink" href="https://www.digitalocean.com/?refcode=c6bc600d254c&utm_campaign=Referral_Invite&utm_medium=Referral_Program&utm_source=badge" target=”_blank”>
+                &nbsp;Digital Ocean
             </a>
         </p>
+        
+        <div>
+            <em>
+                &copy; Please Explain Me 2022
+            </em>
+            
+            <em>
+                Powered by
+                <a id="DOlink" href="https://www.digitalocean.com/?refcode=c6bc600d254c&utm_campaign=Referral_Invite&utm_medium=Referral_Program&utm_source=badge" target=”_blank”>
+                    &nbsp;Digital Ocean
+                </a>
+                
+            </em>
+        </div>
     </footer>
-    -->
+
 </body>
 </html>

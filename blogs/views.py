@@ -28,7 +28,7 @@ def index(request):
     else:
 
         loggedin = False
-        return render(request, "index.html", {"blog_heads" : blog_heads, "loggedin" : loggedin})
+        return render(request, "index.html", {"blog_heads" : blog_heads, "loggedin" : loggedin, "darkmode" : request.POST.get("darkmode")})
 
 
 def user_fetchcontextinator(thename, get_desc = False):
@@ -75,6 +75,7 @@ def json2list(thejsonstring):
         - dark mode
         - a hamburger menu for mobile homepage  // done
         - rate limiting comments, user accounts
+        - add a readme in the blog git repo
         - showing last 50 comments and only showing more when user clicks
         - add a saved json in reader model, make comments' hash code using datetime and add them to     // done
         - add a hashcode entry in the model of both comment and article, so that associated comments can be loaded in the template  // added article name in comment model

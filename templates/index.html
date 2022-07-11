@@ -2,9 +2,12 @@
 {% block title %}Home{% endblock title%}
 
 {% block body %}
+
+
     <p class="myArticleHeading">
         You Have reached the home page
     </p>
+    
 
 
     <p class="frontpagetext">
@@ -15,6 +18,7 @@
         {% csrf_token %}
 
         <input type="radio" name = "saveit" value = "False" style="display:none" id="saveit" checked>
+        <input type="radio" name = "darkmode" value = "False" style="display:none" id="darkmode" checked>
 
         {% for blog_title,blog_name in blog_heads %}
         <div class="submitButtonContainer">
