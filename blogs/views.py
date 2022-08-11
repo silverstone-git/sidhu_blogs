@@ -69,10 +69,11 @@ def json2list(thejsonstring):
 
     """
     tbd- upload page for articles and a retrieval system
-        - a footer in template  // tried, only works if page is full enough
+        - a footer in template  // done
         - posted date in comments   // done
         - separately show user and public comments  // done
-        - dark mode
+        - dark mode // kinda done
+        - footer messes up in > 1 page blog // done
         - a hamburger menu for mobile homepage  // done
         - rate limiting comments, user accounts
         - add a readme in the blog git repo
